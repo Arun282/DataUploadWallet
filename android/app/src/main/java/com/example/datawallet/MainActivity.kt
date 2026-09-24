@@ -9,7 +9,8 @@ import okhttp3.*
 import java.io.IOException
 
 class MainActivity : Activity() {
-    private val BASE_URL = "http://10.0.2.2:3000"
+    // Live Render server
+    private val BASE_URL = "https://data-upload-wallet.onrender.com"
     private val client = OkHttpClient()
     private val PICK = 1001
     private lateinit var status: TextView
@@ -22,7 +23,7 @@ class MainActivity : Activity() {
         }
         val title = TextView(this).apply { text="📦 Data Upload Wallet"; textSize=24f }
         val upload = Button(this).apply { text="📤 Upload Data" }
-        status = TextView(this).apply { text="Ready" }
+        status = TextView(this).apply { text="Ready — Live Server Connected" }
         box.addView(title); box.addView(upload); box.addView(status)
         setContentView(box)
         upload.setOnClickListener {
@@ -38,7 +39,7 @@ class MainActivity : Activity() {
     }
 
     private fun uploadFile(uri: Uri) {
-        status.text="Uploading..."
+        status.text="Uploading to live server..."
         val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() } ?: return
         val name = uri.lastPathSegment ?: "upload.bin"
         val body = MultipartBody.Builder().setType(MultipartBody.FORM)
