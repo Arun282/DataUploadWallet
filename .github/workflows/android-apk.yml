@@ -12,25 +12,34 @@ jobs:
       run:
         working-directory: android
     steps:
-      - name: Checkout
+      - name: Checkout fresh source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Java
+      - name: Set up Java 17
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Gradle
+      - name: Set up Gradle 8.9
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+          cache-disabled: true
 
-      - name: Build Debug APK
-        run: gradle assembleDebug --no-daemon
+      - name: Clean and build APK from scratch
+        run: gradle clean assembleDebug --no-daemon --no-build-cache --refresh-dependencies
+
+      - name: Verify APK exists
+        run: |
+          test -f app/build/outputs/apk/debug/app-debug.apk
+          ls -lh app/build/outputs/apk/debug/app-debug.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: DataUploadWallet-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
