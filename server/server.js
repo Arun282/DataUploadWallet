@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-app.get('/api/health', (_, res) => res.json({ok:true}));
+app.get('/api/health', (_, res) => res.json({ok:true, service:'Data Upload Wallet'}));
 
 app.get('/api/files', (_, res) => {
   const files = fs.readdirSync(uploadDir).map(name => {
@@ -50,4 +50,6 @@ app.delete('/api/files/:name', (req,res) => {
   res.json({ok:true});
 });
 
-app.listen(PORT, () => console.log('Data Wallet server: http://localhost:' + PORT));
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('Data Wallet server listening on port ' + PORT);
+});
