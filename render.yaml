@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: data-upload-wallet
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
