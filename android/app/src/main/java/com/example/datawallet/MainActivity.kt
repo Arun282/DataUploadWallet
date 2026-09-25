@@ -35,6 +35,7 @@ class MainActivity : Activity() {
         filesBox = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
 
         root.addView(title)
+        root.addView(editor)
         root.addView(upload)
         root.addView(refresh)
         root.addView(status)
