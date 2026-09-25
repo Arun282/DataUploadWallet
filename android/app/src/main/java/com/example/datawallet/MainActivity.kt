@@ -29,7 +29,7 @@ class MainActivity : Activity() {
             text = "📦 Data Upload Wallet"
             textSize = 24f
         }
-        val upload = Button(this).apply { text = "📤 Upload File" }
+        val editor = Button(this).apply { text = "📸 Open Photo Editor" }\n        val upload = Button(this).apply { text = "📤 Upload File" }
         val refresh = Button(this).apply { text = "🔄 Refresh Files" }
         status = TextView(this).apply { text = "Connecting to live server..." }
         filesBox = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
@@ -41,7 +41,7 @@ class MainActivity : Activity() {
         root.addView(filesBox)
         setContentView(root)
 
-        upload.setOnClickListener {
+        editor.setOnClickListener { startActivity(Intent(this, EditorActivity::class.java)) }\n        upload.setOnClickListener {
             startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 type = "*/*"
                 addCategory(Intent.CATEGORY_OPENABLE)
